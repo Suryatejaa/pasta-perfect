@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Love Proposal</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Work+Sans:wght@400;600&display=swap");
+
+      :root {
+        --pasta-cream: #f7efe1;
+        --pasta-butter: #f3d9b1;
+        --pasta-peach: #f7c8a6;
+        --pasta-tomato: #e7806a;
+        --pasta-olive: #7a8f6a;
+        --pasta-caramel: #c79762;
+        --ink: #4a3526;
+        --shadow: 0 20px 50px rgba(74, 53, 38, 0.2);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Work Sans", "Trebuchet MS", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top right, rgba(255, 255, 255, 0.35), transparent 55%),
+          radial-gradient(circle at 20% 20%, rgba(247, 200, 166, 0.45), transparent 50%),
+          linear-gradient(145deg, var(--pasta-cream), var(--pasta-butter));
+        overflow: hidden;
+      }
+
+      .hearts {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .heart {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        background: var(--pasta-tomato);
+        transform: rotate(45deg);
+        animation: floatUp linear infinite;
+        opacity: 0.85;
+        filter: drop-shadow(0 4px 6px rgba(231, 128, 106, 0.25));
+      }
+
+      .heart::before,
+      .heart::after {
+        content: "";
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        background: inherit;
+        border-radius: 50%;
+      }
+
+      .heart::before {
+        left: -9px;
+        top: 0;
+      }
+
+      .heart::after {
+        top: -9px;
+        left: 0;
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translateY(120vh) rotate(45deg) scale(0.7);
+        }
+        100% {
+          transform: translateY(-20vh) rotate(45deg) scale(1.2);
+        }
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px 20px 48px;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid rgba(231, 128, 106, 0.2);
+        border-radius: 28px;
+        padding: 40px 36px 36px;
+        box-shadow: var(--shadow);
+        max-width: 560px;
+        width: min(92vw, 560px);
+        text-align: center;
+        backdrop-filter: blur(6px);
+      }
+
+      h1 {
+        font-family: "Playfair Display", "Times New Roman", serif;
+        font-size: clamp(2.2rem, 4vw, 3.2rem);
+        margin: 0 0 12px;
+        color: #573524;
+      }
+
+      p {
+        font-size: 1.05rem;
+        margin: 0 0 28px;
+        line-height: 1.6;
+        color: #6a4a36;
+      }
+
+      .buttons {
+        display: flex;
+        gap: 18px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      button {
+        border: none;
+        padding: 14px 28px;
+        font-size: 1rem;
+        border-radius: 999px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        min-width: 140px;
+      }
+
+      #yesBtn {
+        background: linear-gradient(135deg, var(--pasta-tomato), var(--pasta-peach));
+        color: white;
+        box-shadow: 0 12px 20px rgba(231, 128, 106, 0.35);
+      }
+
+      #yesBtn:hover,
+      #yesBtn:focus-visible {
+        transform: translateY(-2px) scale(1.02);
+      }
+
+      #noBtn {
+        background: linear-gradient(135deg, var(--pasta-olive), var(--pasta-caramel));
+        color: #fff8f0;
+        position: relative;
+      }
+
+      .note {
+        margin-top: 20px;
+        font-size: 0.9rem;
+        color: #8b6a58;
+      }
+
+      .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(74, 53, 38, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        z-index: 2;
+        padding: 20px;
+      }
+
+      .modal.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal-card {
+        background: #fff7ef;
+        border-radius: 22px;
+        padding: 32px;
+        text-align: center;
+        max-width: 440px;
+        width: 100%;
+        box-shadow: var(--shadow);
+      }
+
+      .modal-card h2 {
+        font-family: "Playfair Display", "Times New Roman", serif;
+        margin: 0 0 10px;
+        font-size: 2rem;
+      }
+
+      .modal-card p {
+        margin: 0 0 20px;
+        color: #6a4a36;
+      }
+
+      .close-btn {
+        background: var(--pasta-tomato);
+        color: white;
+      }
+
+      @media (max-width: 500px) {
+        .card {
+          padding: 32px 24px;
+        }
+
+        button {
+          min-width: 120px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hearts" aria-hidden="true"></div>
+
+    <main class="page">
+      <section class="card">
+        <h1>Will You Be My Pasta-Perfect Love?</h1>
+        <p>
+          I want a lifetime of slow dinners, warm kitchens, and the kind of love
+          that feels like comfort food. Will you be my forever?
+        </p>
+        <div class="buttons">
+          <button id="yesBtn" type="button">YES</button>
+          <button id="noBtn" type="button">NO</button>
+        </div>
+        <div class="note">Hint: the NO button is a shy noodle.</div>
+      </section>
+    </main>
+
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-card">
+        <h2 id="modalTitle">We Are Together!</h2>
+        <p>Yes to a lifetime of love, laughter, and pasta nights.</p>
+        <button class="close-btn" type="button" id="closeBtn">Close</button>
+      </div>
+    </div>
+
+    <script>
+      const heartWrap = document.querySelector(".hearts");
+      const heartColors = ["#e7806a", "#f2b7a1", "#f7a98f", "#d08b6f", "#f7c8a6"];
+      const heartCount = 32;
+
+      for (let i = 0; i < heartCount; i += 1) {
+        const heart = document.createElement("span");
+        heart.className = "heart";
+        const size = 10 + Math.random() * 16;
+        const duration = 8 + Math.random() * 10;
+        const delay = Math.random() * 8;
+        const left = Math.random() * 100;
+
+        heart.style.width = `${size}px`;
+        heart.style.height = `${size}px`;
+        heart.style.left = `${left}vw`;
+        heart.style.animationDuration = `${duration}s`;
+        heart.style.animationDelay = `${delay}s`;
+        heart.style.opacity = (0.4 + Math.random() * 0.6).toFixed(2);
+        heart.style.background = heartColors[Math.floor(Math.random() * heartColors.length)];
+
+        heartWrap.appendChild(heart);
+      }
+
+      const noBtn = document.getElementById("noBtn");
+      const yesBtn = document.getElementById("yesBtn");
+      const modal = document.getElementById("modal");
+      const closeBtn = document.getElementById("closeBtn");
+
+      const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+      const moveNoButton = () => {
+        const card = document.querySelector(".card");
+        const cardRect = card.getBoundingClientRect();
+        const padding = 10;
+        const buttonWidth = noBtn.offsetWidth || 140;
+        const buttonHeight = noBtn.offsetHeight || 44;
+        
+        const minX = cardRect.left + padding;
+        const maxX = cardRect.right - buttonWidth - padding;
+        const minY = cardRect.top + padding;
+        const maxY = cardRect.bottom - buttonHeight - padding;
+        
+        const nextX = clamp(Math.random() * (maxX - minX) + minX, minX, maxX);
+        const nextY = clamp(Math.random() * (maxY - minY) + minY, minY, maxY);
+
+        noBtn.style.position = "fixed";
+        noBtn.style.left = `${nextX}px`;
+        noBtn.style.top = `${nextY}px`;
+        noBtn.style.zIndex = "10";
+        noBtn.style.boxShadow = "0 10px 20px rgba(74, 53, 38, 0.25)";
+        noBtn.style.transform = "translateZ(0)";
+      };
+
+      noBtn.addEventListener("mouseenter", moveNoButton);
+      noBtn.addEventListener("click", moveNoButton);
+      noBtn.addEventListener("touchstart", (event) => {
+        event.preventDefault();
+        moveNoButton();
+      });
+
+      yesBtn.addEventListener("click", () => {
+        modal.classList.add("show");
+      });
+
+      closeBtn.addEventListener("click", () => {
+        modal.classList.remove("show");
+      });
+
+      modal.addEventListener("click", (event) => {
+        if (event.target === modal) {
+          modal.classList.remove("show");
+        }
+      });
+    </script>
+  </body>
+</html>
