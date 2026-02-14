@@ -237,7 +237,7 @@
       <div class="modal-card">
         <h2 id="modalTitle">We Are Together!</h2>
         <p>Yes to a lifetime of love, laughter, and pasta nights.</p>
-        <button class="close-btn" type="button" id="closeBtn">Close</button>
+        <button class="close-btn" type="button" id="closeBtn">Confess</button>
       </div>
     </div>
 
@@ -275,7 +275,7 @@
       const moveNoButton = () => {
         const card = document.querySelector(".card");
         const cardRect = card.getBoundingClientRect();
-        const padding = 10;
+        const padding = 10; 
         const buttonWidth = noBtn.offsetWidth || 140;
         const buttonHeight = noBtn.offsetHeight || 44;
         
@@ -308,6 +308,8 @@
 
       closeBtn.addEventListener("click", () => {
         modal.classList.remove("show");
+        // Navigate to the Instagram profile (opens in a new tab)
+        window.open('https://instagram.com/itz.me.surya', '_blank', 'noopener,noreferrer');
       });
 
       modal.addEventListener("click", (event) => {
